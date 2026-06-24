@@ -1,14 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}"
-      x-data="{
-          sidebarOpen: localStorage.getItem('sidebarOpen') !== 'false',
-          mobileMenuOpen: false,
-          init() {
-              this.$watch('sidebarOpen', val => {
-                  localStorage.setItem('sidebarOpen', val);
-              });
-          }
-      }">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,7 +14,16 @@
         <!-- Scripts & Styles -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased bg-[var(--color-surface-soft)] text-[var(--color-body)]">
+    <body class="font-sans antialiased bg-[var(--color-surface-soft)] text-[var(--color-body)]"
+          x-data="{
+              sidebarOpen: localStorage.getItem('sidebarOpen') !== 'false',
+              mobileMenuOpen: false,
+              init() {
+                  this.$watch('sidebarOpen', val => {
+                      localStorage.setItem('sidebarOpen', val);
+                  });
+              }
+          }">
         <div class="min-h-screen flex">
 
             <!-- ============================================================

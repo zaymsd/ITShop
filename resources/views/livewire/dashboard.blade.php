@@ -179,120 +179,112 @@ new #[Layout('layouts.app')] class extends Component {
 
     </div>
 
-    <!-- ApexCharts Library & Init -->
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <!-- ApexCharts Library -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts" data-navigate-once></script>
     <script>
-        document.addEventListener('livewire:initialized', () => {
-            const isDark = document.documentElement.classList.contains('dark');
-            const dates = {!! $chartDates !!};
-            const sales = {!! $chartSales !!};
+        (function() {
+            const chartEl = document.querySelector("#salesChart");
+            if (!chartEl) return;
+            
+            // Cleanup existing chart to prevent duplicates on wire:navigate
+            if (chartEl.__apexcharts_instance) {
+                chartEl.__apexcharts_instance.destroy();
+            }
+            
+            const renderChart = () => {
+                if (typeof ApexCharts === 'undefined') {
+                    setTimeout(renderChart, 50);
+                    return;
+                }
+                
+                const dates = {!! $chartDates !!};
+                const sales = {!! $chartSales !!};
 
-            // Pinterest-style flat chart
-            const options = {
-                series: [{
-                    name: 'Penjualan',
-                    data: sales
-                }],
-                chart: {
-                    type: 'line', // Flat line chart instead of gradient area
-                    height: 320,
-                    toolbar: { show: false },
-                    fontFamily: 'Inter, sans-serif',
-                    background: 'transparent',
-                    animations: {
-                        enabled: true,
-                        easing: 'easeinout',
-                        speed: 800,
-                        animateGradually: {
+                const options = {
+                    series: [{
+                        name: 'Penjualan',
+                        data: sales
+                    }],
+                    chart: {
+                        type: 'line',
+                        height: 320,
+                        toolbar: { show: false },
+                        fontFamily: 'Inter, sans-serif',
+                        background: 'transparent',
+                        animations: {
                             enabled: true,
-                            delay: 150
-                        },
-                        dynamicAnimation: {
-                            enabled: true,
-                            speed: 350
+                            easing: 'easeinout',
+                            speed: 800,
+                            animateGradually: { enabled: true, delay: 150 },
+                            dynamicAnimation: { enabled: true, speed: 350 }
                         }
-                    }
-                },
-                colors: ['#E60023'], // Primary Pinterest Red
-                stroke: {
-                    curve: 'smooth',
-                    width: 4, // Thicker, bolder flat stroke
-                    lineCap: 'round'
-                },
-                markers: {
-                    size: 6,
-                    colors: ['#ffffff'],
-                    strokeColors: '#E60023',
-                    strokeWidth: 3,
-                    hover: {
-                        size: 8,
-                    }
-                },
-                dataLabels: { enabled: false },
-                xaxis: {
-                    categories: dates,
-                    axisBorder: { show: false },
-                    axisTicks: { show: false },
-                    labels: {
-                        style: { 
-                            colors: '#767676', // Mute color
-                            fontWeight: 600,
-                            fontSize: '12px'
-                        }
-                    }
-                },
-                yaxis: {
-                    labels: {
-                        style: { 
-                            colors: '#767676',
-                            fontWeight: 600,
-                            fontSize: '12px'
-                        },
-                        formatter: (value) => {
-                            if (value >= 1000000) return 'Rp ' + (value / 1000000).toFixed(1) + 'M';
-                            if (value >= 1000) return 'Rp ' + (value / 1000).toFixed(0) + 'K';
-                            return 'Rp ' + value;
-                        }
-                    }
-                },
-                grid: {
-                    borderColor: '#e2e8f0', // Hairline color
-                    strokeDashArray: 0,     // Solid grid lines for a cleaner flat look
+                    },
+                    colors: ['#E60023'],
+                    stroke: {
+                        curve: 'smooth',
+                        width: 4,
+                        lineCap: 'round'
+                    },
+                    markers: {
+                        size: 6,
+                        colors: ['#ffffff'],
+                        strokeColors: '#E60023',
+                        strokeWidth: 3,
+                        hover: { size: 8 }
+                    },
+                    dataLabels: { enabled: false },
                     xaxis: {
-                        lines: { show: false }
+                        categories: dates,
+                        axisBorder: { show: false },
+                        axisTicks: { show: false },
+                        labels: {
+                            style: { 
+                                colors: '#767676',
+                                fontWeight: 600,
+                                fontSize: '12px'
+                            }
+                        }
                     },
                     yaxis: {
-                        lines: { show: true }
+                        labels: {
+                            style: { 
+                                colors: '#767676',
+                                fontWeight: 600,
+                                fontSize: '12px'
+                            },
+                            formatter: (value) => {
+                                if (value >= 1000000) return 'Rp ' + (value / 1000000).toFixed(1) + 'M';
+                                if (value >= 1000) return 'Rp ' + (value / 1000).toFixed(0) + 'K';
+                                return 'Rp ' + value;
+                            }
+                        }
                     },
-                    padding: {
-                        top: 0,
-                        right: 0,
-                        bottom: 0,
-                        left: 10
-                    }
-                },
-                theme: {
-                    mode: 'light' // The flat UI relies on light-based high contrast mostly
-                },
-                tooltip: {
-                    theme: 'light',
-                    style: {
-                        fontSize: '14px',
-                        fontFamily: 'Inter, sans-serif'
+                    grid: {
+                        borderColor: '#e2e8f0',
+                        strokeDashArray: 0,
+                        xaxis: { lines: { show: false } },
+                        yaxis: { lines: { show: true } },
+                        padding: { top: 0, right: 0, bottom: 0, left: 10 }
                     },
-                    marker: {
-                        show: false
-                    },
-                    y: {
-                        formatter: function (val) {
-                            return "Rp " + val.toLocaleString('id-ID')
+                    theme: { mode: 'light' },
+                    tooltip: {
+                        theme: 'light',
+                        style: { fontSize: '14px', fontFamily: 'Inter, sans-serif' },
+                        marker: { show: false },
+                        y: {
+                            formatter: function (val) {
+                                return 'Rp ' + val.toLocaleString('id-ID')
+                            }
                         }
                     }
-                }
-            };
+                };
 
-            const chart = new ApexCharts(document.querySelector("#salesChart"), options);
-            chart.render();
-        });
+                const chart = new ApexCharts(chartEl, options);
+                chartEl.__apexcharts_instance = chart;
+                chart.render();
+            };
+            
+            renderChart();
+        })();
     </script>
 </div>

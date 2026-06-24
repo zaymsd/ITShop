@@ -412,7 +412,7 @@ new #[Layout('layouts.app')] class extends Component {
                             </div>
                         </label>
                         <label class="cursor-pointer">
-                            <input type="radio" wire:model.live="paymentMethod" value="transfer" class="peer sr-only">
+                            <input type="radio" wire:model.live="paymentMethod" value="non-cash" class="peer sr-only">
                             <div class="rounded-[16px] border border-ash px-4 py-4 flex flex-col items-center gap-2 hover:bg-surface-soft peer-checked:border-ink peer-checked:shadow-[inset_0_0_0_1px_#111111] transition-all bg-canvas">
                                 <svg class="w-6 h-6 text-mute peer-checked:text-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
                                 <span class="text-sm font-bold text-ink">Transfer/Qris</span>
@@ -494,10 +494,17 @@ new #[Layout('layouts.app')] class extends Component {
             @endif
             
             <div class="w-full flex flex-col gap-3">
-                <button class="btn-primary w-full justify-center">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
-                    Cetak Struk
-                </button>
+                @if($lastSale)
+                    <a href="{{ route('pos.receipt', $lastSale->id) }}" target="_blank" class="btn-primary w-full justify-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+                        Cetak Struk
+                    </a>
+                @else
+                    <button class="btn-primary w-full justify-center" disabled>
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+                        Cetak Struk
+                    </button>
+                @endif
                 <button wire:click="closeReceipt" class="btn-secondary w-full justify-center">
                     Transaksi Baru
                 </button>

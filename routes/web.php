@@ -43,11 +43,33 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Volt::route('purchases/create', 'pages.purchases.create')->name('purchases.create');
         Volt::route('purchases/{purchase}', 'pages.purchases.show')->name('purchases.show');
         Volt::route('reports/sales', 'pages.reports.sales')->name('reports.sales');
+        Route::get('reports/sales/pdf', function(\Illuminate\Http\Request $request) {
+            $startDate = $request->query('start');
+            $endDate = $request->query('end');
+            
+            $sales = \App\Models\Sale::with('user')
+                ->when($startDate, fn($q) => $q->whereDate('created_at', '>=', $startDate))
+                ->when($endDate, fn($q) => $q->whereDate('created_at', '<=', $endDate))
+                ->latest()
+                ->get();
+                
+            $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('exports.sales-pdf', [
+                'sales' => $sales,
+                'startDate' => $startDate,
+                'endDate' => $endDate,
+            ]);
+            
+            return $pdf->stream('Laporan_Penjualan_'.date('Ymd').'.pdf');
+        })->name('reports.sales.pdf');
     });
 
     // ── POS / Kasir: petugas AND admin ────────────────────────────────────────
     Route::middleware('role:admin,petugas')->group(function () {
         Volt::route('pos', 'pages.pos.index')->name('pos.index');
+        Route::get('pos/receipt/{sale}', function (\App\Models\Sale $sale) {
+            $sale->load(['saleItems.product', 'user']);
+            return view('pages.pos.receipt', compact('sale'));
+        })->name('pos.receipt');
     });
 });
 
