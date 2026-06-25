@@ -245,7 +245,7 @@ new #[Layout('layouts.app')] class extends Component {
                     </div>
                     
                     {{-- Remove button --}}
-                    <button wire:click="removeFromCart({{ $index }})" class="absolute top-2 right-2 p-1.5 text-mute hover:text-primary transition-colors opacity-0 group-hover:opacity-100 rounded-full hover:bg-[#ffeaea]">
+                    <button wire:click="removeFromCart({{ $index }})" class="absolute top-2 right-2 p-1.5 text-mute hover:text-primary transition-colors opacity-0 group-hover:opacity-100 rounded-full hover:bg-[var(--color-danger-bg)]">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                     </button>
                 </div>
@@ -315,7 +315,7 @@ new #[Layout('layouts.app')] class extends Component {
 
         {{-- Alerts --}}
         @if (session('error'))
-            <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 4000)" class="m-4 flex items-center justify-between gap-3 rounded-[16px] bg-[#ffeaea] border border-[#ffcaca] px-4 py-3 text-sm text-primary shadow-sm">
+            <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 4000)" class="m-4 flex items-center justify-between gap-3 rounded-[16px] bg-[var(--color-danger-bg)] border border-[var(--color-danger-border)] px-4 py-3 text-sm text-primary shadow-sm">
                 <div class="flex items-center gap-2">
                     <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     <span class="font-semibold">{{ session('error') }}</span>
@@ -332,7 +332,7 @@ new #[Layout('layouts.app')] class extends Component {
                             @if($product->stock <= 0) disabled @endif>
                         
                         {{-- Image Placeholder --}}
-                        <div class="aspect-square bg-surface-soft rounded-[16px] mb-4 flex items-center justify-center text-mute group-hover:bg-[#ffeaea] group-hover:text-primary transition-colors">
+                        <div class="aspect-square bg-surface-soft rounded-[16px] mb-4 flex items-center justify-center text-mute group-hover:bg-[var(--color-danger-bg)] group-hover:text-primary transition-colors">
                             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                         </div>
                         
@@ -450,9 +450,9 @@ new #[Layout('layouts.app')] class extends Component {
 
                     {{-- Change --}}
                     @if($this->changeAmount > 0)
-                    <div class="mt-6 flex justify-between items-center p-4 bg-[#E6F4EA] border border-[#CEEAD6] rounded-[16px]">
-                        <span class="text-[14px] font-bold text-[#137333]">Kembalian</span>
-                        <span class="text-[20px] font-black text-[#137333]">Rp {{ number_format($this->changeAmount, 0, ',', '.') }}</span>
+                    <div class="mt-6 flex justify-between items-center p-4 bg-[var(--color-success-bg)] border border-[var(--color-success-border)] rounded-[16px]">
+                        <span class="text-[14px] font-bold text-[var(--color-success-text)]">Kembalian</span>
+                        <span class="text-[20px] font-black text-[var(--color-success-text)]">Rp {{ number_format($this->changeAmount, 0, ',', '.') }}</span>
                     </div>
                     @endif
                 </div>
@@ -484,7 +484,7 @@ new #[Layout('layouts.app')] class extends Component {
              x-transition:leave="ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
              class="w-full max-w-[400px] bg-canvas rounded-[32px] p-8 shadow-[0_0_16px_rgba(0,0,0,0.1)] flex flex-col items-center text-center">
             
-            <div class="w-20 h-20 bg-[#E6F4EA] text-[#137333] rounded-full flex items-center justify-center mb-6">
+            <div class="w-20 h-20 bg-[var(--color-success-bg)] text-[var(--color-success-text)] rounded-full flex items-center justify-center mb-6">
                 <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
             </div>
             

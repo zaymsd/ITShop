@@ -73,7 +73,7 @@ new class extends Component
                 {{ __('Ubah Password') }}
             </button>
 
-            <x-action-message class="me-3 text-sm font-bold text-[#137333]" on="password-updated">
+            <x-action-message class="me-3 text-sm font-bold text-[var(--color-success-text)]" on="password-updated">
                 {{ __('Tersimpan.') }}
             </x-action-message>
         </div>

@@ -42,6 +42,16 @@
     --color-focus-outer: #435ee5;
     --color-focus-inner: #ffffff;
 
+    /* Semantic Alerts */
+    --color-success-bg: #E6F4EA;
+    --color-success-text: #137333;
+    --color-success-border: #CEEAD6;
+    --color-danger-bg: #ffeaea;
+    --color-danger-text: #e60023;
+    --color-danger-border: #ffcaca;
+    --color-warning-bg: #FFF3E0;
+    --color-warning-text: #E65100;
+
     /* Border Radius Scale */
     --radius-none: 0px;
     --radius-sm: 8px;
@@ -75,6 +85,40 @@
 @keyframes scale-in {
     from { opacity: 0; transform: scale(0.95); }
     to { opacity: 1; transform: scale(1); }
+}
+
+/* --------------------------------------------------------------------------
+   Dark Mode Inversions
+   -------------------------------------------------------------------------- */
+.dark {
+    --color-canvas: #090909;
+    --color-surface-soft: #111111;
+    --color-surface-card: #1c1c1c;
+    --color-secondary-bg: #2d2d2d;
+    --color-secondary-pressed: #3d3d3d;
+    --color-surface-dark: #ffffff;
+    --color-hairline: #333333;
+    --color-hairline-soft: #222222;
+    --color-ink: #ffffff;
+    --color-ink-soft: #e5e5e0;
+    --color-body: #cccccc;
+    --color-charcoal: #e5e5e0;
+    --color-mute: #999999;
+    --color-ash: #444444;
+    --color-stone: #666666;
+    --color-on-dark: #000000;
+    
+    /* Semantic Alerts Inversion */
+    --color-success-bg: #0d2a17;
+    --color-success-text: #68c78b;
+    --color-success-border: #164727;
+    
+    --color-danger-bg: #3b0d0d;
+    --color-danger-text: #ff8585;
+    --color-danger-border: #631515;
+
+    --color-warning-bg: #401d00;
+    --color-warning-text: #ffb74d;
 }
 
 /* --------------------------------------------------------------------------

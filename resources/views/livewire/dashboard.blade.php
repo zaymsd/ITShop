@@ -72,7 +72,7 @@ new #[Layout('layouts.app')] class extends Component {
         <!-- Stat Card: Total Products -->
         <div class="bg-surface-card rounded-[32px] p-6 border border-hairline hover:shadow-[0_0_0_2px_#111111] transition-all duration-200 group">
             <div class="flex items-center justify-between mb-6">
-                <div class="w-12 h-12 rounded-[16px] bg-surface-soft group-hover:bg-[#ffeaea] transition-colors flex items-center justify-center">
+                <div class="w-12 h-12 rounded-[16px] bg-surface-soft group-hover:bg-[var(--color-danger-bg)] transition-colors flex items-center justify-center">
                     <svg class="w-6 h-6 text-mute group-hover:text-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
                     </svg>
@@ -85,7 +85,7 @@ new #[Layout('layouts.app')] class extends Component {
         <!-- Stat Card: Today's Transactions -->
         <div class="bg-surface-card rounded-[32px] p-6 border border-hairline hover:shadow-[0_0_0_2px_#111111] transition-all duration-200 group">
             <div class="flex items-center justify-between mb-6">
-                <div class="w-12 h-12 rounded-[16px] bg-surface-soft group-hover:bg-[#ffeaea] transition-colors flex items-center justify-center">
+                <div class="w-12 h-12 rounded-[16px] bg-surface-soft group-hover:bg-[var(--color-danger-bg)] transition-colors flex items-center justify-center">
                     <svg class="w-6 h-6 text-mute group-hover:text-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
                     </svg>
@@ -98,7 +98,7 @@ new #[Layout('layouts.app')] class extends Component {
         <!-- Stat Card: Today's Revenue -->
         <div class="bg-surface-card rounded-[32px] p-6 border border-hairline hover:shadow-[0_0_0_2px_#111111] transition-all duration-200 group">
             <div class="flex items-center justify-between mb-6">
-                <div class="w-12 h-12 rounded-[16px] bg-surface-soft group-hover:bg-[#ffeaea] transition-colors flex items-center justify-center">
+                <div class="w-12 h-12 rounded-[16px] bg-surface-soft group-hover:bg-[var(--color-danger-bg)] transition-colors flex items-center justify-center">
                     <svg class="w-6 h-6 text-mute group-hover:text-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                     </svg>
@@ -113,7 +113,7 @@ new #[Layout('layouts.app')] class extends Component {
         <!-- Stat Card: Today's Profit -->
         <div class="bg-surface-card rounded-[32px] p-6 border border-hairline hover:shadow-[0_0_0_2px_#111111] transition-all duration-200 group">
             <div class="flex items-center justify-between mb-6">
-                <div class="w-12 h-12 rounded-[16px] bg-surface-soft group-hover:bg-[#ffeaea] transition-colors flex items-center justify-center">
+                <div class="w-12 h-12 rounded-[16px] bg-surface-soft group-hover:bg-[var(--color-danger-bg)] transition-colors flex items-center justify-center">
                     <svg class="w-6 h-6 text-mute group-hover:text-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
                     </svg>
@@ -140,7 +140,7 @@ new #[Layout('layouts.app')] class extends Component {
         <div class="bg-surface-card rounded-[32px] p-8 border border-hairline flex flex-col">
             <div class="flex items-center justify-between mb-6">
                 <h3 class="text-heading-md text-ink">Stok Menipis</h3>
-                <span class="px-3 py-1 rounded-[12px] bg-[#ffeaea] text-primary text-[10px] font-black uppercase tracking-wider">
+                <span class="px-3 py-1 rounded-[12px] bg-[var(--color-danger-bg)] text-primary text-[10px] font-black uppercase tracking-wider">
                     Peringatan
                 </span>
             </div>

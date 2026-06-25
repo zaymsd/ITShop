@@ -96,7 +96,7 @@ new class extends Component
                     </p>
 
                     @if (session('status') === 'verification-link-sent')
-                        <p class="mt-2 font-bold text-sm text-[#137333]">
+                        <p class="mt-2 font-bold text-sm text-[var(--color-success-text)]">
                             {{ __('Tautan verifikasi baru telah dikirim ke alamat email Anda.') }}
                         </p>
                     @endif
@@ -109,7 +109,7 @@ new class extends Component
                 {{ __('Simpan Perubahan') }}
             </button>
 
-            <x-action-message class="me-3 text-sm font-bold text-[#137333]" on="profile-updated">
+            <x-action-message class="me-3 text-sm font-bold text-[var(--color-success-text)]" on="profile-updated">
                 {{ __('Tersimpan.') }}
             </x-action-message>
         </div>

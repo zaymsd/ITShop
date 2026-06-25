@@ -74,7 +74,7 @@ new #[Layout('layouts.app')] class extends Component {
                 Preview PDF
             </a>
             <button wire:click="exportExcel" wire:loading.attr="disabled" class="btn-secondary px-4 py-[11px] text-[14px] flex items-center gap-2">
-                <svg class="w-5 h-5 text-[#137333]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                <svg class="w-5 h-5 text-[var(--color-success-text)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                 Export Excel
             </button>
         </div>
@@ -84,7 +84,7 @@ new #[Layout('layouts.app')] class extends Component {
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
         <div class="bg-surface-card rounded-[32px] p-6 border border-hairline hover:shadow-[0_0_0_2px_#111111] transition-all duration-200 group flex flex-col justify-between">
             <div class="flex items-center gap-3 mb-4">
-                <div class="w-12 h-12 rounded-[16px] bg-surface-soft group-hover:bg-[#ffeaea] transition-colors flex items-center justify-center shrink-0">
+                <div class="w-12 h-12 rounded-[16px] bg-surface-soft group-hover:bg-[var(--color-danger-bg)] transition-colors flex items-center justify-center shrink-0">
                     <svg class="w-6 h-6 text-mute group-hover:text-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
                 </div>
                 <span class="text-xs font-bold text-mute uppercase tracking-wider">Total Transaksi</span>
@@ -94,7 +94,7 @@ new #[Layout('layouts.app')] class extends Component {
         
         <div class="bg-surface-card rounded-[32px] p-6 border border-hairline hover:shadow-[0_0_0_2px_#111111] transition-all duration-200 group flex flex-col justify-between">
             <div class="flex items-center gap-3 mb-4">
-                <div class="w-12 h-12 rounded-[16px] bg-surface-soft group-hover:bg-[#ffeaea] transition-colors flex items-center justify-center shrink-0">
+                <div class="w-12 h-12 rounded-[16px] bg-surface-soft group-hover:bg-[var(--color-danger-bg)] transition-colors flex items-center justify-center shrink-0">
                     <svg class="w-6 h-6 text-mute group-hover:text-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 </div>
                 <span class="text-xs font-bold text-mute uppercase tracking-wider">Total Pendapatan</span>
@@ -106,7 +106,7 @@ new #[Layout('layouts.app')] class extends Component {
         
         <div class="bg-surface-card rounded-[32px] p-6 border border-hairline hover:shadow-[0_0_0_2px_#111111] transition-all duration-200 group flex flex-col justify-between">
             <div class="flex items-center gap-3 mb-4">
-                <div class="w-12 h-12 rounded-[16px] bg-surface-soft group-hover:bg-[#ffeaea] transition-colors flex items-center justify-center shrink-0">
+                <div class="w-12 h-12 rounded-[16px] bg-surface-soft group-hover:bg-[var(--color-danger-bg)] transition-colors flex items-center justify-center shrink-0">
                     <svg class="w-6 h-6 text-mute group-hover:text-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z"/></svg>
                 </div>
                 <span class="text-xs font-bold text-mute uppercase tracking-wider">Total PPN (11%)</span>
@@ -168,11 +168,11 @@ new #[Layout('layouts.app')] class extends Component {
                             </td>
                             <td class="px-6 py-4 text-center">
                                 @if($sale->payment_method === 'cash')
-                                    <span class="inline-flex items-center justify-center px-2 py-1 rounded-[8px] text-[10px] font-black bg-[#E6F4EA] text-[#137333] uppercase tracking-wider">
+                                    <span class="inline-flex items-center justify-center px-2 py-1 rounded-[8px] text-[10px] font-black bg-[var(--color-success-bg)] text-[var(--color-success-text)] uppercase tracking-wider">
                                         Tunai
                                     </span>
                                 @else
-                                    <span class="inline-flex items-center justify-center px-2 py-1 rounded-[8px] text-[10px] font-black bg-[#FFF3E0] text-[#E65100] uppercase tracking-wider">
+                                    <span class="inline-flex items-center justify-center px-2 py-1 rounded-[8px] text-[10px] font-black bg-[var(--color-warning-bg)] text-[var(--color-warning-text)] uppercase tracking-wider">
                                         Transfer
                                     </span>
                                 @endif

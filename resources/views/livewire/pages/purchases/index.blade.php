@@ -33,11 +33,11 @@ new #[Layout('layouts.app')] class extends Component {
     {{-- ── Flash Messages ────────────────────────────────────────────────────── --}}
     @if (session('success'))
         <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 4000)"
-             class="mb-6 flex items-center justify-between gap-3 rounded-[16px] bg-[#E6F4EA] border border-[#CEEAD6] px-4 py-3 text-sm text-[#137333] shadow-sm">
+             class="mb-6 flex items-center justify-between gap-3 rounded-[16px] bg-[var(--color-success-bg)] border border-[var(--color-success-border)] px-4 py-3 text-sm text-[var(--color-success-text)] shadow-sm">
             <div class="flex items-center gap-2">
                 <span class="font-semibold">{{ session('success') }}</span>
             </div>
-            <button @click="show = false" class="text-[#137333] hover:opacity-70">
+            <button @click="show = false" class="text-[var(--color-success-text)] hover:opacity-70">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
         </div>

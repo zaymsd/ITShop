@@ -57,14 +57,14 @@ new #[Layout('layouts.app')] class extends Component {
              x-transition:leave="transition ease-in duration-300"
              x-transition:leave-start="opacity-100 translate-y-0"
              x-transition:leave-end="opacity-0 -translate-y-2"
-             class="mb-6 flex items-center justify-between gap-3 rounded-[16px] bg-[#E6F4EA] border border-[#CEEAD6] px-4 py-3 text-sm text-[#137333] shadow-sm">
+             class="mb-6 flex items-center justify-between gap-3 rounded-[16px] bg-[var(--color-success-bg)] border border-[var(--color-success-border)] px-4 py-3 text-sm text-[var(--color-success-text)] shadow-sm">
             <div class="flex items-center gap-2">
                 <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
                 <span class="font-semibold">{{ session('success') }}</span>
             </div>
-            <button @click="show = false" class="text-[#137333] hover:opacity-70 transition-opacity">
+            <button @click="show = false" class="text-[var(--color-success-text)] hover:opacity-70 transition-opacity">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                 </svg>
@@ -150,7 +150,7 @@ new #[Layout('layouts.app')] class extends Component {
                                     </a>
                                     <button wire:click="confirmDelete({{ $item->id }})"
                                             title="Hapus"
-                                            class="w-8 h-8 rounded-[8px] flex items-center justify-center text-mute hover:bg-[#ffeaea] hover:text-primary transition-colors border border-transparent hover:border-[#ffcaca]">
+                                            class="w-8 h-8 rounded-[8px] flex items-center justify-center text-mute hover:bg-[var(--color-danger-bg)] hover:text-primary transition-colors border border-transparent hover:border-[var(--color-danger-border)]">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                                         </svg>
@@ -213,7 +213,7 @@ new #[Layout('layouts.app')] class extends Component {
              x-transition:leave-end="opacity-0 scale-95"
              class="w-full max-w-[400px] bg-canvas rounded-[32px] p-8 shadow-[0_0_16px_rgba(0,0,0,0.1)] flex flex-col items-center text-center">
 
-            <div class="w-16 h-16 rounded-full bg-[#ffeaea] flex items-center justify-center mb-6">
+            <div class="w-16 h-16 rounded-full bg-[var(--color-danger-bg)] flex items-center justify-center mb-6">
                 <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                 </svg>
