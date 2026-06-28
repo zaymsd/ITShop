@@ -10,7 +10,7 @@ class Brand extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'logo'];
+    protected $fillable = ['name'];
 
     // ─── Relationships ─────────────────────────────────────────────────────────
 

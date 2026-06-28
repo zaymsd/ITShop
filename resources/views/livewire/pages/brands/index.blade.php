@@ -97,7 +97,6 @@ new #[Layout('layouts.app')] class extends Component {
                 <thead class="bg-surface-soft border-b border-hairline">
                     <tr>
                         <th class="px-6 py-4 text-xs font-bold text-mute uppercase tracking-wider w-12">No</th>
-                        <th class="px-6 py-4 text-xs font-bold text-mute uppercase tracking-wider w-20">Logo</th>
                         <th class="px-6 py-4 text-xs font-bold text-mute uppercase tracking-wider">Nama Brand</th>
                         <th class="px-6 py-4 text-center text-xs font-bold text-mute uppercase tracking-wider">Produk</th>
                         <th class="px-6 py-4 text-center text-xs font-bold text-mute uppercase tracking-wider w-28">Aksi</th>
@@ -108,19 +107,6 @@ new #[Layout('layouts.app')] class extends Component {
                         <tr class="hover:bg-surface-soft transition-colors duration-150">
                             <td class="px-6 py-4 text-mute font-mono text-xs">
                                 {{ $brands->firstItem() + $loop->index }}
-                            </td>
-                            <td class="px-6 py-4">
-                                @if ($item->logo)
-                                    <img src="{{ asset('storage/' . $item->logo) }}"
-                                         alt="{{ $item->name }}"
-                                         class="w-10 h-10 object-contain rounded-[8px] bg-canvas border border-ash p-1"/>
-                                @else
-                                    <div class="w-10 h-10 rounded-[8px] bg-canvas border border-ash flex items-center justify-center">
-                                        <svg class="w-5 h-5 text-mute" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                        </svg>
-                                    </div>
-                                @endif
                             </td>
                             <td class="px-6 py-4">
                                 <span class="font-bold text-ink">{{ $item->name }}</span>

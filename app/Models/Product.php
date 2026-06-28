@@ -21,7 +21,6 @@ class Product extends Model
         'stock',
         'min_stock',
         'specs',
-        'image',
         'category_id',
         'brand_id',
         'supplier_id',
@@ -48,6 +47,16 @@ class Product extends Model
     }
 
     // ─── Relationships ─────────────────────────────────────────────────────────
+
+    public function images(): HasMany
+    {
+        return $this->hasMany(ProductImage::class);
+    }
+
+    public function primaryImage(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(ProductImage::class)->where('is_primary', true);
+    }
 
     public function category(): BelongsTo
     {

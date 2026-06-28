@@ -186,7 +186,7 @@ new #[Layout('layouts.app')] class extends Component {
     public function render(): \Illuminate\View\View
     {
         return view('livewire.pages.pos.index', [
-            'products' => Product::with(['category', 'brand'])
+            'products' => Product::with(['category', 'brand', 'primaryImage'])
                 ->when($this->search, fn($q) => $q->where(function($q) {
                     $q->where('name', 'like', "%{$this->search}%")
                       ->orWhere('sku', 'like', "%{$this->search}%");
@@ -332,8 +332,12 @@ new #[Layout('layouts.app')] class extends Component {
                             @if($product->stock <= 0) disabled @endif>
                         
                         {{-- Image Placeholder --}}
-                        <div class="aspect-square bg-surface-soft rounded-[16px] mb-4 flex items-center justify-center text-mute group-hover:bg-[var(--color-danger-bg)] group-hover:text-primary transition-colors">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        <div class="aspect-square bg-canvas rounded-[16px] mb-4 flex items-center justify-center text-mute group-hover:bg-surface-soft transition-colors border border-ash overflow-hidden">
+                            @if($product->primaryImage)
+                                <img src="{{ asset('storage/' . $product->primaryImage->image_path) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                            @else
+                                <svg class="w-8 h-8 opacity-50 group-hover:text-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                            @endif
                         </div>
                         
                         <div class="text-[12px] font-bold text-mute mb-1 line-clamp-1">{{ $product->category->name }}</div>

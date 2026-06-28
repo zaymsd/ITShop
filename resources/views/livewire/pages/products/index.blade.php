@@ -46,7 +46,7 @@ new #[Layout('layouts.app')] class extends Component {
     public function render(): \Illuminate\View\View
     {
         return view('livewire.pages.products.index', [
-            'products' => Product::with(['category', 'brand'])
+            'products' => Product::with(['category', 'brand', 'primaryImage'])
                 ->when($this->search, fn ($q) => $q->where(function ($q) {
                     $q->where('name', 'like', "%{$this->search}%")
                       ->orWhere('sku', 'like', "%{$this->search}%");
@@ -124,15 +124,26 @@ new #[Layout('layouts.app')] class extends Component {
                                 {{ $products->firstItem() + $loop->index }}
                             </td>
                             <td class="px-6 py-4">
-                                <div class="font-bold text-ink">
-                                    {{ $product->name }}
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-[8px] bg-canvas border border-ash overflow-hidden shrink-0 flex items-center justify-center">
+                                        @if($product->primaryImage)
+                                            <img src="{{ asset('storage/' . $product->primaryImage->image_path) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                                        @else
+                                            <svg class="w-5 h-5 text-mute" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                        @endif
+                                    </div>
+                                    <div>
+                                        <div class="font-bold text-ink">
+                                            {{ $product->name }}
+                                        </div>
+                                        <div class="text-xs text-mute mt-1 font-mono bg-canvas px-1.5 py-0.5 rounded-[4px] inline-block">
+                                            {{ $product->sku }}
+                                        </div>
+                                        @if($product->barcode)
+                                            <div class="text-[10px] text-mute mt-0.5">{{ $product->barcode }}</div>
+                                        @endif
+                                    </div>
                                 </div>
-                                <div class="text-xs text-mute mt-1 font-mono bg-canvas px-1.5 py-0.5 rounded-[4px] inline-block">
-                                    {{ $product->sku }}
-                                </div>
-                                @if($product->barcode)
-                                    <div class="text-[10px] text-mute mt-0.5">{{ $product->barcode }}</div>
-                                @endif
                             </td>
                             <td class="px-6 py-4 text-ink text-sm">
                                 <div>{{ $product->category?->name ?? '—' }}</div>

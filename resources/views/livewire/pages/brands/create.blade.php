@@ -46,9 +46,6 @@ new #[Layout('layouts.app')] class extends Component {
                 @error('name') <p class="mt-1.5 text-xs font-semibold text-primary">{{ $message }}</p> @enderror
             </div>
 
-            <p class="text-xs font-semibold text-mute">
-                Upload logo brand tersedia di halaman detail brand (opsional).
-            </p>
 
             {{-- Buttons --}}
             <div class="flex items-center justify-end gap-3 pt-4 border-t border-hairline">

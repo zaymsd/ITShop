@@ -5,9 +5,12 @@ use App\Models\Brand;
 use App\Models\Supplier;
 use Livewire\Volt\Component;
 use Livewire\Attributes\Layout;
+use Livewire\WithFileUploads;
 use Illuminate\Validation\Rule;
 
 new #[Layout('layouts.app')] class extends Component {
+    use WithFileUploads;
+
     public string $name        = '';
     public string $sku         = '';
     public string $barcode     = '';
@@ -19,6 +22,8 @@ new #[Layout('layouts.app')] class extends Component {
     public string $category_id = '';
     public string $brand_id    = '';
     public string $supplier_id = '';
+    
+    public $photos = [];
 
     public bool $showSaveModal = false;
 
@@ -36,13 +41,14 @@ new #[Layout('layouts.app')] class extends Component {
             'category_id' => ['required', 'exists:categories,id'],
             'brand_id'    => ['required', 'exists:brands,id'],
             'supplier_id' => ['nullable', 'exists:suppliers,id'],
+            'photos.*'    => ['image', 'max:5120'], // Max 5MB per image
         ]);
         $this->showSaveModal = true;
     }
 
     public function save(): void
     {
-        Product::create([
+        $product = Product::create([
             'name'        => $this->name,
             'sku'         => strtoupper(trim($this->sku)),
             'barcode'     => $this->barcode ?: null,
@@ -55,6 +61,17 @@ new #[Layout('layouts.app')] class extends Component {
             'brand_id'    => $this->brand_id,
             'supplier_id' => $this->supplier_id ?: null,
         ]);
+        
+        if (!empty($this->photos)) {
+            foreach ($this->photos as $index => $photo) {
+                $path = $photo->store('products', 'public');
+                $product->images()->create([
+                    'image_path' => $path,
+                    'is_primary' => $index === 0, // First image is primary
+                ]);
+            }
+        }
+        
         session()->flash('success', 'Produk berhasil ditambahkan.');
         $this->redirect(route('products.index'), navigate: true);
     }
@@ -211,6 +228,26 @@ new #[Layout('layouts.app')] class extends Component {
                 <textarea wire:model="specs" rows="3" placeholder="Contoh: Processor Intel i5..."
                           class="w-full px-[15px] py-[11px] bg-canvas text-ink text-[16px] border border-ash rounded-[16px] outline-none transition-all duration-200 focus:border-transparent focus:ring-4 focus:ring-focus-outer focus:shadow-[inset_0_0_0_2px_#000000] resize-none"></textarea>
                 @error('specs') <p class="mt-1.5 text-xs font-semibold text-primary">{{ $message }}</p> @enderror
+            </div>
+
+            {{-- Photos --}}
+            <div>
+                <label class="block text-[14px] font-semibold text-ink mb-1.5">
+                    Foto Produk (Bisa lebih dari satu)
+                </label>
+                <input wire:model="photos" type="file" multiple accept="image/*"
+                       class="w-full px-[15px] py-[11px] bg-canvas text-ink text-[16px] border border-ash rounded-[16px] outline-none transition-all duration-200 focus:border-transparent focus:ring-4 focus:ring-focus-outer focus:shadow-[inset_0_0_0_2px_#000000]"/>
+                @error('photos.*') <p class="mt-1.5 text-xs font-semibold text-primary">{{ $message }}</p> @enderror
+                
+                @if ($photos)
+                    <div class="mt-4 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                        @foreach ($photos as $photo)
+                            <div class="aspect-square bg-canvas rounded-[12px] border border-ash overflow-hidden">
+                                <img src="{{ $photo->temporaryUrl() }}" class="w-full h-full object-cover">
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
             </div>
 
             {{-- Buttons --}}

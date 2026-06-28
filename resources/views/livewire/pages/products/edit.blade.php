@@ -5,9 +5,14 @@ use App\Models\Brand;
 use App\Models\Supplier;
 use Livewire\Volt\Component;
 use Livewire\Attributes\Layout;
+use Livewire\WithFileUploads;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
+use App\Models\ProductImage;
 
 new #[Layout('layouts.app')] class extends Component {
+    use WithFileUploads;
+
     public int $id;
     public string $name        = '';
     public string $sku         = '';
@@ -20,6 +25,9 @@ new #[Layout('layouts.app')] class extends Component {
     public string $category_id = '';
     public string $brand_id    = '';
     public string $supplier_id = '';
+
+    public $photos = [];
+    public $existingImages = [];
 
     public bool $showUpdateModal = false;
 
@@ -38,6 +46,27 @@ new #[Layout('layouts.app')] class extends Component {
         $this->category_id = (string)$product->category_id;
         $this->brand_id    = (string)$product->brand_id;
         $this->supplier_id = (string)($product->supplier_id ?? '');
+        $this->existingImages = $product->images()->get();
+    }
+
+    public function deleteImage(int $imageId): void
+    {
+        $image = ProductImage::find($imageId);
+        if ($image && $image->product_id === $this->id) {
+            Storage::disk('public')->delete($image->image_path);
+            $wasPrimary = $image->is_primary;
+            $image->delete();
+            
+            // If deleted image was primary, make the first available image primary
+            if ($wasPrimary) {
+                $firstAvailable = ProductImage::where('product_id', $this->id)->first();
+                if ($firstAvailable) {
+                    $firstAvailable->update(['is_primary' => true]);
+                }
+            }
+            
+            $this->existingImages = ProductImage::where('product_id', $this->id)->get();
+        }
     }
 
     public function confirmUpdate(): void
@@ -54,13 +83,15 @@ new #[Layout('layouts.app')] class extends Component {
             'category_id' => ['required', 'exists:categories,id'],
             'brand_id'    => ['required', 'exists:brands,id'],
             'supplier_id' => ['nullable', 'exists:suppliers,id'],
+            'photos.*'    => ['image', 'max:5120'], // Max 5MB per image
         ]);
         $this->showUpdateModal = true;
     }
 
     public function save(): void
     {
-        Product::findOrFail($this->id)->update([
+        $product = Product::findOrFail($this->id);
+        $product->update([
             'name'        => $this->name,
             'sku'         => strtoupper(trim($this->sku)),
             'barcode'     => $this->barcode ?: null,
@@ -73,6 +104,19 @@ new #[Layout('layouts.app')] class extends Component {
             'brand_id'    => $this->brand_id,
             'supplier_id' => $this->supplier_id ?: null,
         ]);
+        
+        if (!empty($this->photos)) {
+            $hasPrimary = ProductImage::where('product_id', $this->id)->where('is_primary', true)->exists();
+            
+            foreach ($this->photos as $index => $photo) {
+                $path = $photo->store('products', 'public');
+                $product->images()->create([
+                    'image_path' => $path,
+                    'is_primary' => !$hasPrimary && $index === 0,
+                ]);
+            }
+        }
+        
         session()->flash('success', 'Produk berhasil diperbarui.');
         $this->redirect(route('products.index'), navigate: true);
     }
@@ -229,6 +273,46 @@ new #[Layout('layouts.app')] class extends Component {
                 <textarea wire:model="specs" rows="3" placeholder="Contoh: Processor Intel i5..."
                           class="w-full px-[15px] py-[11px] bg-canvas text-ink text-[16px] border border-ash rounded-[16px] outline-none transition-all duration-200 focus:border-transparent focus:ring-4 focus:ring-focus-outer focus:shadow-[inset_0_0_0_2px_#000000] resize-none"></textarea>
                 @error('specs') <p class="mt-1.5 text-xs font-semibold text-primary">{{ $message }}</p> @enderror
+            </div>
+
+            {{-- Photos --}}
+            <div>
+                <label class="block text-[14px] font-semibold text-ink mb-1.5">
+                    Foto Produk
+                </label>
+                
+                @if (count($existingImages) > 0)
+                    <div class="mb-4 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                        @foreach ($existingImages as $image)
+                            <div class="relative aspect-square bg-canvas rounded-[12px] border border-ash overflow-hidden group">
+                                <img src="{{ asset('storage/' . $image->image_path) }}" class="w-full h-full object-cover">
+                                @if($image->is_primary)
+                                    <div class="absolute top-1 left-1 bg-ink text-canvas text-[10px] font-bold px-1.5 py-0.5 rounded-[4px]">Utama</div>
+                                @endif
+                                <button type="button" wire:click="deleteImage({{ $image->id }})" wire:confirm="Yakin ingin menghapus foto ini?"
+                                        class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                </button>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
+                
+                <input wire:model="photos" type="file" multiple accept="image/*"
+                       class="w-full px-[15px] py-[11px] bg-canvas text-ink text-[16px] border border-ash rounded-[16px] outline-none transition-all duration-200 focus:border-transparent focus:ring-4 focus:ring-focus-outer focus:shadow-[inset_0_0_0_2px_#000000]"/>
+                <p class="mt-1 text-xs text-mute">Tambahkan foto baru (Bisa pilih lebih dari satu)</p>
+                @error('photos.*') <p class="mt-1.5 text-xs font-semibold text-primary">{{ $message }}</p> @enderror
+                
+                @if ($photos)
+                    <div class="mt-4 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 opacity-50">
+                        @foreach ($photos as $photo)
+                            <div class="aspect-square bg-canvas rounded-[12px] border border-ash overflow-hidden relative">
+                                <img src="{{ $photo->temporaryUrl() }}" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 flex items-center justify-center text-white bg-black/30 text-[10px] font-bold">New</div>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
             </div>
 
             {{-- Buttons --}}
