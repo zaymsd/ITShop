@@ -14,12 +14,7 @@
         <!-- Primary Nav (Logged Out) -->
         <header class="h-16 flex items-center justify-between px-6 bg-[var(--color-canvas)]">
             <div class="flex items-center gap-2">
-                <div class="w-8 h-8 rounded-full bg-[var(--color-primary)] flex items-center justify-center">
-                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <rect x="3" y="4" width="18" height="12" rx="2" stroke-width="2"/>
-                        <line x1="2" y1="20" x2="22" y2="20" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
-                </div>
+                <img src="{{ asset('images/ITShop-logo.png') }}" alt="ITShop Logo" class="w-[68px] h-[68px] object-contain">
                 <span class="font-bold text-[var(--color-primary)] text-lg">ITShop</span>
             </div>
             

@@ -26,31 +26,24 @@ new class extends Component
         transaksiOpen: {{ request()->routeIs('pos.*', 'purchases.*') ? 'true' : 'false' }},
         laporanOpen: {{ request()->routeIs('reports.*') ? 'true' : 'false' }},
     }"
-    class="fixed inset-y-0 left-0 z-50 flex flex-col
+    class="fixed inset-y-0 left-0 z-50 flex flex-col w-64
            bg-[var(--color-canvas)]
            border-r border-[var(--color-hairline)]
            transition-all duration-300 ease-in-out"
     :class="{
-        'w-64': sidebarOpen,
-        'w-16': !sidebarOpen,
-        'translate-x-0': mobileMenuOpen || true,
+        'lg:w-64': sidebarOpen,
+        'lg:w-16': !sidebarOpen,
+        'translate-x-0': mobileMenuOpen,
         '-translate-x-full lg:translate-x-0': !mobileMenuOpen,
     }">
 
     {{-- ============================================================
          SIDEBAR HEADER / LOGO
          ============================================================ --}}
-    <div class="h-16 flex items-center px-4 shrink-0">
+    <div class="h-[84px] flex items-center px-4 shrink-0">
         <a href="{{ route('dashboard') }}" wire:navigate class="flex items-center gap-3 group overflow-hidden">
             {{-- Logo Icon --}}
-            <div class="w-8 h-8 rounded-full bg-[var(--color-primary)]
-                        flex items-center justify-center shrink-0
-                        transition-all duration-300">
-                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <rect x="3" y="4" width="18" height="12" rx="2" stroke-width="2"/>
-                    <line x1="2" y1="20" x2="22" y2="20" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-            </div>
+            <img src="{{ asset('images/ITShop-logo.png') }}" alt="ITShop Logo" class="w-[68px] h-[68px] object-contain shrink-0 transition-all duration-300">
             {{-- Logo Text (hidden when collapsed) --}}
             <div x-show="sidebarOpen" x-transition:enter="transition ease-out duration-200 delay-100"
                  x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
@@ -79,10 +72,10 @@ new class extends Component
         {{-- ---- Dashboard ---- --}}
         <a href="{{ route('dashboard') }}" wire:navigate
            class="flex items-center gap-3 px-3 py-2 rounded-[16px] text-sm font-semibold transition-colors duration-200 {{ request()->routeIs('dashboard') ? 'bg-[var(--color-surface-card)] text-[var(--color-ink)]' : 'text-[var(--color-mute)] hover:bg-[var(--color-surface-soft)] hover:text-[var(--color-ink)]' }}">
-            {{-- Icon: chart-bar --}}
+            {{-- Icon: grid/squares-2x2 --}}
             <svg class="w-5 h-5 shrink-0 {{ request()->routeIs('dashboard') ? 'text-[var(--color-primary)]' : '' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                      d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
             </svg>
             <span x-show="sidebarOpen" x-transition:enter="transition ease-out duration-200"
                   x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"

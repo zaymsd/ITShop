@@ -7,6 +7,9 @@
 
         <title>{{ config('app.name', 'ITShop') }}</title>
 
+        <!-- Favicon -->
+        <link rel="icon" type="image/png" href="{{ asset('images/ITShop-logo.png') }}">
+
         <!-- Fonts: Inter via bunny.net -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=inter:300,400,500,600,700,800&display=swap" rel="stylesheet" />
@@ -24,12 +27,7 @@
                     
                     <!-- Logo / Branding -->
                     <a href="/" wire:navigate class="mb-4 flex flex-col items-center">
-                        <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center mb-4">
-                            <svg class="w-5 h-5 text-on-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <rect x="3" y="4" width="18" height="12" rx="2" stroke-width="2"/>
-                                <line x1="2" y1="20" x2="22" y2="20" stroke-width="2" stroke-linecap="round"/>
-                            </svg>
-                        </div>
+                        <img src="{{ asset('images/ITShop-logo.png') }}" alt="ITShop Logo" class="h-[100px] w-auto mb-4 object-contain">
                         <h1 class="text-heading-lg text-ink text-center mb-1">
                             Welcome to ITShop
                         </h1>

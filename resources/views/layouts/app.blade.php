@@ -7,6 +7,9 @@
 
         <title>{{ config('app.name', 'ITShop') }}</title>
 
+        <!-- Favicon -->
+        <link rel="icon" type="image/png" href="{{ asset('images/ITShop-logo.png') }}">
+
         <!-- Fonts: Inter via bunny.net -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=inter:300,400,500,600,700,800&display=swap" rel="stylesheet" />
