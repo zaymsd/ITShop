@@ -4,7 +4,13 @@ use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
 // ─── Public Landing ────────────────────────────────────────────────────────────
-Route::view('/', 'welcome');
+Route::get('/', function () {
+    $products = \App\Models\Product::with('primaryImage')
+        ->latest()
+        ->take(8)
+        ->get();
+    return view('welcome', compact('products'));
+});
 
 // ─── Authenticated Routes ──────────────────────────────────────────────────────
 Route::middleware(['auth', 'verified'])->group(function () {
